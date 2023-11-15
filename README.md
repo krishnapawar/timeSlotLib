@@ -1,14 +1,14 @@
-### time-slot (timeSlot) Library Overview:
+### date-time-slots (timeSlot) Library Overview:
 
->`time-slot` (timeSlot) is a user-friendly JavaScript library for Node.js that simplifies the handling of time slots in projects. It provides easy-to-use methods to convert, manipulate, and generate time slots. Here's a quick rundown:
+>`date-time-slots` (timeSlot) is a user-friendly JavaScript library for Node.js that simplifies the handling of time slots in projects. It provides easy-to-use methods to convert, manipulate, and generate time slots. Here's a quick rundown:
 This library aims to make working with time slots in Node.js projects straightforward and efficient. Developers can easily integrate it into their applications for effective time management.
 
 ### install package
 ```shh
-npm i time-slot
+npm i date-time-slots
 ```
 ```shh
-npm i @krishnapawar/time-slot
+npm i @krishnapawar/date-time-slots
 ```
 
 1 Time Conversion:
