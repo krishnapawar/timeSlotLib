@@ -7,9 +7,18 @@ This library aims to make working with time slots in Node.js projects straightfo
 ```shh
 npm i date-time-slots
 ```
+```shh 
+const {startToEndTimeSlot,normalToRalwayTimeConvert,railwayToNormalTimeConvert,formatTimeIn24Hour, timeSlot} = require("date-time-slots");
+```
+### OR
+
 ```shh
 npm i @krishnapawar/date-time-slots
 ```
+```shh 
+const {startToEndTimeSlot,normalToRalwayTimeConvert,railwayToNormalTimeConvert,formatTimeIn24Hour, timeSlot} = require("@krishnapawar/date-time-slots");
+```
+
 
 1 Time Conversion:
 
