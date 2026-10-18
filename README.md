@@ -1,283 +1,346 @@
-### date-time-slots (timeSlot) Library Overview:
+# @krishnapawar/date-time-slots ⚡
 
->`date-time-slots` (timeSlot) is a user-friendly JavaScript library for Node.js that simplifies the handling of time slots in projects. It provides easy-to-use methods to convert, manipulate, and generate time slots. Here's a quick rundown:
-This library aims to make working with time slots in Node.js projects straightforward and efficient. Developers can easily integrate it into their applications for effective time management.
+> **High-performance, zero-dependency time slot generator, availability engine, and conflict resolver for JavaScript & TypeScript.**
 
-### install package
-```shh
-npm i date-time-slots
-```
-```shh 
-const {startToEndTimeSlot,normalToRalwayTimeConvert,railwayToNormalTimeConvert,formatTimeIn24Hour, timeSlot} = require("date-time-slots");
-```
-### OR
+[![npm version](https://img.shields.io/npm/v/@krishnapawar/date-time-slots.svg)](https://www.npmjs.com/package/@krishnapawar/date-time-slots)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://www.npmjs.com/package/@krishnapawar/date-time-slots)
+[![TypeScript Included](https://img.shields.io/badge/TypeScript-Included-blue.svg)](./lib/index.d.ts)
+[![Tests Passing](https://img.shields.io/badge/tests-27%20passing-brightgreen.svg)](./test/slots.test.js)
 
-```shh
-npm i @krishnapawar/date-time-slots
-```
-```shh 
-const {startToEndTimeSlot,normalToRalwayTimeConvert,railwayToNormalTimeConvert,formatTimeIn24Hour, timeSlot} = require("@krishnapawar/date-time-slots");
-```
+---
 
+## 🚀 Why `@krishnapawar/date-time-slots` v2.0?
 
-1 Time Conversion:
+* ⚡ **Zero External Dependencies** — Completely native minute arithmetic (< 3KB bundle size). Replaced heavy, deprecated dependencies like `moment.js`.
+* ⏱️ **Buffer & Cleanup Time** — Built-in support for break/cleanup gaps between appointments (e.g. 10-minute buffer).
+* ☕ **Break Schedules** — Easily exclude lunch breaks or split-shift pauses (e.g. `13:00 - 14:00`).
+* 📅 **Availability & Free-Slot Engine** — Pass your busy appointments and automatically compute all available free slots.
+* 👥 **Multi-Calendar Common Free Time** — Find times when multiple people are all available for a meeting.
+* 🛡️ **Conflict & Collision Detector** — Prevent double-bookings with instant overlap detection.
+* 🌙 **Overnight & Shift Support** — Handles shifts spanning midnight (e.g. `22:00` to `06:00`).
+* 🔗 **Fluent Chainable Builder** — `TimeSlot.create().between(...).every(30)...`
+* 📦 **Dual ESM & CommonJS** — Works seamlessly with `import` and `require`.
+* 📘 **First-Class TypeScript** — Full `.d.ts` types and autocompletion included.
+* 🔄 **100% Backward Compatible** — Existing v1.x code continues to work seamlessly with bug-free implementations.
 
- * `railwayToNormalTimeConvert` and `formatTimeIn24Hour` convert railway time to normal time and vice versa.
- *  `normalToRailwayTimeConvert` changes normal time to railway time.
+---
 
-```javaScript
-railwayToNormalTimeConvert("13:00");
-formatTimeIn24Hour("13:00");
-normalToRailwayTimeConvert("01:00 AM");
-```
-### Examples.
+## 📦 Installation
 
->railwayToNormalTimeConvert method covert railway time into normal time example
-```javaScript
-
-    railwayToNormalTimeConvert("13:00");
-```
->we can also use same as formatTimeIn24Hour method covert railway time into normal time example
-```javaScript
-
-    formatTimeIn24Hour("13:00");
+```bash
+npm install @krishnapawar/date-time-slots
 ```
 
->also apposite method same as normalToRalwayTimeConvert method covert normal time into railway time example
-```javaScript
+or with yarn / pnpm:
 
-    normalToRalwayTimeConvert("01:00 AM");
-```
-2 Generating Time Slots:
-
-* `timeSlot` generates an array of time slots based on provided start and end times.
-You can customize the duration and format of the slots.
-```javaScript
-let slots = timeSlot({ starting_time: '12:00', ending_time: '17:00', duration: 15 });
-```
-* Additional options include handling current time, specific dates, and blocking slots.
-```javaScript
-let slots = timeSlot({ isCurrent: true, date: "2023-11-05", starting_time: '12:00', ending_time: '17:00' });
+```bash
+yarn add @krishnapawar/date-time-slots
+pnpm add @krishnapawar/date-time-slots
 ```
 
->timeSlot method covert into simple time slot it take three argument in json starting_time,ending_time,and duration, and it give output in array example ['12:00','12:15','12:30','12:45','01:00','01:15']
-> example paylode `{ duration:15, date: "2023-11-05"T10:13:02.481Z, isCurrent: true,  starting_time: '12:00', ending_time: '17:00' } `
-```javaScript
+---
 
-    let data = timeSlot({starting_time: '12:00', ending_time: '17:00' } );
-```
->we can pass time as 12 hour format or 24 format is this method it give as same output.
-```javaScript
+## ⚡ Quick Start
 
-    let data = timeSlot({starting_time: '11:00 PM', ending_time: '01:00 AM' } );
-```
->If we want check time with current time and show only remening slot only. then we have to use keyword (`isCurrent:true`) in this object.
-```javaScript
+### ES Module (import)
+```javascript
+import { generateSlots, TimeSlot } from '@krishnapawar/date-time-slots';
 
-    let data = timeSlot({ isCurrent: true,  starting_time: '12:00', ending_time: '17:00' } );
-
-```
->If we want check time with current time and current date then we have to pass date as well in the object with `{
-    date:"2023-10-04",
-    isCurrent:true
-} `and it show only remening slot only in current.
-```javaScript
-
-    let data = timeSlot({ date: "2023-11-05", isCurrent: true,  starting_time: '12:00', ending_time: '17:00' } );
-
-```
->By default It make 15 minuts time slot If you want to change time slot duration you can chang using keyword => `duration:30`,
-
-```javaScript
-
-    let data = timeSlot({ duration: 15, date: "2023-11-05", isCurrent: true,  starting_time: '12:00', ending_time: '17:00' } );
-```
->If you want show slot current time to next slot then use keyword `next:true`.
-```javaScript
-
-    let data = timeSlot({ 
-        duration: 15, 
-        date: "2023-11-05", 
-        isCurrent: true,  
-        starting_time: '12:00', 
-        ending_time: '17:00', 
-        next:true 
-        } );
-```
->if you want slot in 24 hour time you can use keyword =>`isNotRailwayTime:true`, It give you time slot in 24 hour time.
-```javaScript
-
-    let data = timeSlot({ 
-        duration: 15, 
-        date: "2023-11-05", 
-        isCurrent: true,  
-        starting_time: '12:00', 
-        ending_time: '17:00', 
-        next:true,
-        isNotRailwayTime:true, 
-        } );
-```
->If you want to block time slot with pertitucler date we have to use =>
-`blockSchedule:[
-            // "12:15 PM",
-            // "12:30 PM",
-            // "12:45 PM",
-            "12:00",
-            "14:00",
-            ]` 
-with array object with block slot and date with keyword =>`date:"2023-10-04"`. exmaple 
-```javaScript
-
-    let data = timeSlot({ 
-        duration: 15, 
-        date: "2023-11-05", 
-        isCurrent: true,  
-        starting_time: '12:00', 
-        ending_time: '17:00', 
-        next:true,
-        isNotRailwayTime:true,
-        blockSchedule:[
-            // "12:15 PM",
-            // "12:30 PM",
-            // "12:45 PM",
-            "12:00",
-            "14:00",
-        ]  
-        } );
-```
-3 Pair of Time Slots:
-
-* startToEndTimeSlot generates pairs of start and end times based on given parameters.
-Similar customization options are available.
-```javaScript
-let timePairs = startToEndTimeSlot("11:00 PM", "01:00 AM", { isCurrent: true, date: "2023-10-04" });
-```
-
-* `startToEndTimeSlot` method covert into pair of time slot in object format. it take three argument in `startToEndTimeSlot()` method, `starting_time,ending_time,` and `object,` and object is optional. we can pass time as 12 hour format or 24 format is this method it give as same output.
-exmaple given below.
->12 hour format
-
-```javaScript
-
-let data =startToEndTimeSlot("11:00 PM","01:00 AM");
-
-```
->24 hour format
-```javaScript
-
-let data =startToEndTimeSlot("11:00","'17:00'");
-
-```
-* If we want check time with current time and show only remening slot only. then we have to use keyword (isCurrent:true) in this object.
-```javaScript
-
-let data =startToEndTimeSlot("11:00 PM","01:00 AM",{
-    isCurrent:true
+// Generate 30-minute appointment slots between 09:00 and 12:00
+const slots = generateSlots({
+  start: '09:00',
+  end: '12:00',
+  interval: 30
 });
 
+console.log(slots);
+// [
+//   { start: '09:00', end: '09:30', duration: 30 },
+//   { start: '09:30', end: '10:00', duration: 30 },
+//   { start: '10:00', end: '10:30', duration: 30 },
+//   ...
+// ]
 ```
-* If we want check time with current time and current date then we have to pass date as well in the object with `{
-    date:"2023-10-04",
-    isCurrent:true
-}` and it show only remening slot only in current.
-```javaScript
 
-let data =startToEndTimeSlot("11:00 PM","01:00 AM",{
-    date:"2023-10-04",
-    isCurrent:true
+### CommonJS (require)
+```javascript
+const { generateSlots, TimeSlot } = require('@krishnapawar/date-time-slots');
+```
+
+---
+
+## 📖 Feature Guide & Examples
+
+### 1. Slot Generation (`generateSlots`)
+
+#### Basic Generation (12-hour or 24-hour)
+```javascript
+import { generateSlots } from '@krishnapawar/date-time-slots';
+
+const slots = generateSlots({
+  start: '09:00 AM',
+  end: '01:00 PM',
+  interval: 45,       // 45-minute slots
+  format: '12h'       // '12h' ("09:00 AM") or '24h' ("09:00")
 });
 ```
-* If you want to block time slot with pertitucler date we have to use =>`blockSchedule:[{"slot": "9:15 PM - 9:30 PM"}]` with array object with block slot and date with keyword =>date:"2023-10-04". exmaple 
-```javaScript
 
-let data =startToEndTimeSlot("11:00 PM","01:00 AM",{
-        blockSchedule:[
-                {
-                    "slot": "9:15 PM - 9:30 PM"
-                },
-                {
-                    "slot": "9:45 PM - 10:00 PM"
-                }
-            ],
-        date:"2023-10-04",
-        isCurrent:true
-    });
+#### With Buffers Between Slots (e.g., 10-minute break between appointments)
+```javascript
+const slots = generateSlots({
+  start: '09:00',
+  end: '12:00',
+  interval: 30,
+  buffer: 10          // 10 min break after each slot
+});
+// 09:00 - 09:30
+// 09:40 - 10:10
+// 10:20 - 10:50
 ```
-* By default It make 15 minuts time slot If you want to change time slot duration you can chang using keyword => `duration:30`,
-```javaScript
 
-let data =startToEndTimeSlot("11:00 PM","01:00 AM",{
-        blockSchedule:[
-                {
-                    "slot": "9:15 PM - 9:30 PM"
-                },
-                {
-                    "slot": "9:45 PM - 10:00 PM"
-                }
-            ],
-        date:"2023-10-04",
-        isCurrent:true,
-        duration:30,
-    });
+#### Exclude Lunch Breaks & Blocked Appointments
+```javascript
+const slots = generateSlots({
+  start: '09:00 AM',
+  end: '05:00 PM',
+  interval: 30,
+  format: '12h',
+  breaks: [
+    { start: '01:00 PM', end: '02:00 PM' }  // Exclude lunch break
+  ],
+  blocked: [
+    { start: '10:00 AM', end: '10:30 AM' }  // Booked appointment
+  ]
+});
 ```
-* if you want slot in 24 hour time you can use keyword =>`isNotRailwayTime:true`, It give you time slot in 24 hour time.
-```javaScript
 
-let data =startToEndTimeSlot("11:00 PM","01:00 AM",{
-        blockSchedule:[
-                {
-                    "slot": "9:15 PM - 9:30 PM"
-                },
-                {
-                    "slot": "9:45 PM - 10:00 PM"
-                }
-            ],
-        date:"2023-10-04",
-        isCurrent:true,
-        duration:30,
-        isNotRailwayTime:true,
-    });
+#### Overnight Shift (Crossing Midnight)
+```javascript
+const nightSlots = generateSlots({
+  start: '22:00',
+  end: '04:00',
+  interval: 60
+});
+// 22:00-23:00, 23:00-00:00, 00:00-01:00, 01:00-02:00, 02:00-03:00, 03:00-04:00
 ```
-* If you want date with slot you can use key word =>`withDate:true`,
-```javaScript
 
-let data =startToEndTimeSlot("11:00 PM","01:00 AM",{
-        blockSchedule:[
-                {
-                    "slot": "9:15 PM - 9:30 PM"
-                },
-                {
-                    "slot": "9:45 PM - 10:00 PM"
-                }
-            ],
-        date:"2023-10-04",
-        isCurrent:true,
-        withDate:true,
-        duration:30,
-        isNotRailwayTime:true,
-    });
+#### Return as Formatted Strings
+```javascript
+const stringSlots = generateSlots({
+  start: '09:00',
+  end: '11:00',
+  interval: 30,
+  asString: true
+});
+// ['09:00 - 09:30', '09:30 - 10:00', '10:00 - 10:30', '10:30 - 11:00']
 ```
-* If we want response in start,end in form of keys and values object. then we have to use keyword =>`startToEndObj:true`,
-```javaScript
 
-let data =startToEndTimeSlot("11:00 PM","01:00 AM",{
-        blockSchedule:[
-                {
-                    "start": "10:45",
-                    "end": "11:00",
-                    "date": "2023-11-13"
-                },
-                {
-                    "start": "11:00",
-                    "end": "11:15",
-                    "date": "2023-11-13"
-                }
-            ],
-        date:"2023-11-13",
-        isCurrent:true,
-        withDate:true,
-        duration:30,
-        isNotRailwayTime:true,
-        startToEndObj:true,
-    });
+---
+
+### 2. Fluent Builder API (`TimeSlot`)
+
+For clean, chainable and readable code:
+
+```javascript
+import { TimeSlot } from '@krishnapawar/date-time-slots';
+
+const slots = TimeSlot.create()
+  .between('09:00 AM', '05:00 PM')
+  .every(30)                              // 30 min duration
+  .withBuffer(10)                         // 10 min break
+  .format('12h')                          // 12-hour AM/PM format
+  .excludeBreak('01:00 PM', '02:00 PM')   // Lunch break
+  .block({ start: '10:00 AM', end: '10:30 AM' })
+  .filterPassedToday()                    // Skip past slots if date is today
+  .toPairs();                             // returns [{ start, end, duration }]
+
+// Or get formatted strings:
+const strings = TimeSlot.create().between('09:00', '11:00').every(30).toStrings();
+// ['09:00 - 09:30', '09:30 - 10:00', '10:00 - 10:30', '10:30 - 11:00']
+
+// Or get discrete time points:
+const points = TimeSlot.create().between('09:00', '11:00').every(30).toPoints();
+// ['09:00', '09:30', '10:00', '10:30', '11:00']
 ```
+
+---
+
+### 3. Availability Engine: Find Free Slots (`findFreeSlots`)
+
+Automatically calculate available open slots by subtracting busy appointments from work hours:
+
+```javascript
+import { findFreeSlots } from '@krishnapawar/date-time-slots';
+
+const busyAppointments = [
+  { start: '10:00', end: '11:00' },
+  { start: '14:00', end: '15:30' }
+];
+
+// 1. Get continuous free periods
+const freeGaps = findFreeSlots({
+  workHours: { start: '09:00', end: '18:00' },
+  busySlots: busyAppointments,
+  minDuration: 30 // Minimum 30 mins
+});
+// [
+//   { start: '09:00', end: '10:00', duration: 60 },
+//   { start: '11:00', end: '14:00', duration: 180 },
+//   { start: '15:30', end: '18:00', duration: 150 }
+// ]
+
+// 2. Or chunk free periods into 30-min bookable slots
+const bookableSlots = findFreeSlots({
+  workHours: { start: '09:00', end: '18:00' },
+  busySlots: busyAppointments,
+  slotDuration: 30
+});
+```
+
+---
+
+### 4. Multi-Person Meeting Finder (`findCommonFreeSlots`)
+
+Find meeting times when all participants are free:
+
+```javascript
+import { findCommonFreeSlots } from '@krishnapawar/date-time-slots';
+
+const doctorSchedule = [{ start: '09:00', end: '10:30' }, { start: '13:00', end: '14:00' }];
+const patientSchedule = [{ start: '11:30', end: '13:00' }];
+
+const mutualSlots = findCommonFreeSlots({
+  schedules: [doctorSchedule, patientSchedule],
+  workHours: { start: '09:00', end: '17:00' },
+  slotDuration: 30
+});
+```
+
+---
+
+### 5. Conflict & Overlap Detection
+
+```javascript
+import { isOverlapping, hasConflict, mergeSlots } from '@krishnapawar/date-time-slots';
+
+// Check if two slots overlap
+isOverlapping(
+  { start: '10:00', end: '11:00' },
+  { start: '10:30', end: '11:30' }
+); // true
+
+// Check if a requested booking conflicts with existing bookings
+const bookedAppointments = [
+  { start: '09:00', end: '10:00' },
+  { start: '14:00', end: '15:00' }
+];
+
+const newBooking = { start: '09:30', end: '10:30' };
+if (hasConflict(newBooking, bookedAppointments)) {
+  console.log('Slot is already booked!');
+}
+
+// Merge overlapping or adjacent slots
+const merged = mergeSlots([
+  { start: '09:00', end: '10:00' },
+  { start: '09:30', end: '10:30' },
+  { start: '10:30', end: '11:00' }
+]);
+// [{ start: '09:00', end: '11:00', duration: 120 }]
+```
+
+---
+
+### 6. Time Conversion Utilities
+
+Zero-dependency utilities for converting time strings:
+
+```javascript
+import {
+  timeToMinutes,
+  minutesToTime,
+  formatTime,
+  railwayToNormalTimeConvert,
+  normalToRailwayTimeConvert
+} from '@krishnapawar/date-time-slots';
+
+timeToMinutes('09:30');          // 570
+timeToMinutes('09:30 AM');       // 570
+timeToMinutes('12:00 AM');       // 0 (midnight)
+timeToMinutes('12:00 PM');       // 720 (noon)
+
+minutesToTime(570, '24h');       // '09:30'
+minutesToTime(570, '12h');       // '09:30 AM'
+
+formatTime('13:00', '12h');      // '01:00 PM'
+formatTime('01:00 PM', '24h');   // '13:00'
+```
+
+---
+
+## 🔄 Backward Compatibility (v1.x Support)
+
+Existing v1 code continues to work seamlessly with bug fixes:
+
+```javascript
+const {
+  startToEndTimeSlot,
+  timeSlot,
+  railwayToNormalTimeConvert,
+  normalToRailwayTimeConvert
+} = require('@krishnapawar/date-time-slots');
+
+// Legacy slot generation
+let data = startToEndTimeSlot('11:00 AM', '01:00 PM', {
+  duration: 30,
+  startToEndObj: true
+});
+
+// Legacy time points
+let points = timeSlot({
+  starting_time: '12:00',
+  ending_time: '17:00',
+  duration: 15
+});
+```
+
+---
+
+## 🛠️ TypeScript Support
+
+Full TypeScript definitions are included out of the box:
+
+```typescript
+import {
+  generateSlots,
+  TimeSlot,
+  SlotItem,
+  GenerateSlotsOptions
+} from '@krishnapawar/date-time-slots';
+
+const options: GenerateSlotsOptions = {
+  start: '09:00 AM',
+  end: '05:00 PM',
+  interval: 30,
+  format: '12h'
+};
+
+const slots: SlotItem[] = generateSlots(options);
+```
+
+---
+
+## 🧪 Testing
+
+The library includes an extensive test suite using Node.js's native test runner:
+
+```bash
+npm test
+```
+
+---
+
+## 📄 License
+
+MIT © [Krishna Pawar](https://github.com/krishnapawar)
