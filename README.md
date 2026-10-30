@@ -1,17 +1,5 @@
 # @krishnapawar/date-time-slots ⚡
 
-> **High-performance, zero-dependency time slot generator, availability engine, and conflict resolver for JavaScript & TypeScript.**
-
-[![npm version](https://img.shields.io/npm/v/@krishnapawar/date-time-slots.svg)](https://www.npmjs.com/package/@krishnapawar/date-time-slots)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://www.npmjs.com/package/@krishnapawar/date-time-slots)
-[![TypeScript Included](https://img.shields.io/badge/TypeScript-Included-blue.svg)](./lib/index.d.ts)
-[![Tests Passing](https://img.shields.io/badge/tests-27%20passing-brightgreen.svg)](./test/slots.test.js)
-
----
-
-# @krishnapawar/date-time-slots ⚡
-
 **A powerful, lightweight, zero-dependency JavaScript and TypeScript time slot generator, appointment scheduling library, availability checker, and booking conflict resolver for Node.js applications.**
 
 Generate appointment slots, calculate available time slots, manage break schedules, detect overlapping bookings, find common free time across multiple calendars, and handle overnight shifts with a simple API.
