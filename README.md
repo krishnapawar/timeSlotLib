@@ -10,23 +10,57 @@
 
 ---
 
-## 🚀 Why `@krishnapawar/date-time-slots` v2.0?
+# @krishnapawar/date-time-slots ⚡
 
-* ⚡ **Zero External Dependencies** — Completely native minute arithmetic (< 3KB bundle size). Replaced heavy, deprecated dependencies like `moment.js`.
-* ⏱️ **Buffer & Cleanup Time** — Built-in support for break/cleanup gaps between appointments (e.g. 10-minute buffer).
-* ☕ **Break Schedules** — Easily exclude lunch breaks or split-shift pauses (e.g. `13:00 - 14:00`).
-* 📅 **Availability & Free-Slot Engine** — Pass your busy appointments and automatically compute all available free slots.
-* 👥 **Multi-Calendar Common Free Time** — Find times when multiple people are all available for a meeting.
-* 🛡️ **Conflict & Collision Detector** — Prevent double-bookings with instant overlap detection.
-* 🌙 **Overnight & Shift Support** — Handles shifts spanning midnight (e.g. `22:00` to `06:00`).
-* 🔗 **Fluent Chainable Builder** — `TimeSlot.create().between(...).every(30)...`
-* 📦 **Dual ESM & CommonJS** — Works seamlessly with `import` and `require`.
-* 📘 **First-Class TypeScript** — Full `.d.ts` types and autocompletion included.
-* 🔄 **100% Backward Compatible** — Existing v1.x code continues to work seamlessly with bug-free implementations.
+**A powerful, lightweight, zero-dependency JavaScript and TypeScript time slot generator, appointment scheduling library, availability checker, and booking conflict resolver for Node.js applications.**
+
+Generate appointment slots, calculate available time slots, manage break schedules, detect overlapping bookings, find common free time across multiple calendars, and handle overnight shifts with a simple API.
+
+[![npm version](https://img.shields.io/npm/v/@krishnapawar/date-time-slots.svg)](https://www.npmjs.com/package/@krishnapawar/date-time-slots)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://www.npmjs.com/package/@krishnapawar/date-time-slots)
+[![TypeScript Included](https://img.shields.io/badge/TypeScript-Included-blue.svg)](./lib/index.d.ts)
+[![Tests Passing](https://img.shields.io/badge/tests-27%20passing-brightgreen.svg)](./test/slots.test.js)
+
+---
+
+## 🚀 Why use date-time-slots?
+
+`date-time-slots` (timeSlot) helps developers build appointment booking systems, scheduling applications, meeting planners, and calendar availability features without implementing complex time calculations from scratch. `date-time-slots` (timeSlot) is a user-friendly JavaScript library for Node.js and react.js that simplifies the handling of time slots in projects. It provides easy-to-use methods to convert, manipulate, and generate time slots. Here's a quick rundown:
+This library aims to make working with time slots in Node.js and react.js projects straightforward and efficient. Developers can easily integrate it into their applications for effective time management.
+
+### Key Features
+
+- ⏱️ **Time Slot Generator** – Generate customizable appointment slots using 12-hour or 24-hour time formats.
+- 📅 **Appointment Scheduling** – Create bookable time slots with flexible durations and intervals.
+- ☕ **Break & Buffer Management** – Automatically exclude lunch breaks, blocked periods, and cleanup time.
+- 🟢 **Availability Checker** – Calculate available free time by subtracting existing appointments.
+- 👥 **Common Availability Finder** – Find meeting times when multiple people are simultaneously available.
+- 🛡️ **Booking Conflict Detection** – Detect overlapping appointments and prevent double bookings.
+- 🌙 **Overnight Shift Support** – Handle schedules that cross midnight.
+- 🔗 **Fluent Builder API** – Create readable scheduling logic using chainable methods.
+- 📦 **Zero Dependencies** – Lightweight with no external runtime dependencies.
+- 📘 **TypeScript Support** – Built-in TypeScript definitions and autocomplete.
+- 🔄 **Backward Compatible** – Supports existing v1.x APIs.
+
+### Perfect For
+
+- Appointment booking applications
+- Doctor and patient scheduling systems
+- Salon and spa booking platforms
+- Meeting and calendar applications
+- Online class and tutoring platforms
+- Employee shift scheduling
+- Hotel and service reservation systems
+- Event and resource booking applications
 
 ---
 
 ## 📦 Installation
+
+```shh
+npm i date-time-slots
+```
 
 ```bash
 npm install @krishnapawar/date-time-slots
@@ -328,6 +362,92 @@ const options: GenerateSlotsOptions = {
 
 const slots: SlotItem[] = generateSlots(options);
 ```
+
+---
+## 🐛 Report Issues & Request Features
+
+Found a bug, unexpected behavior, or have an idea to improve this library? We would love to hear from you!
+
+- 🐞 **Report a Bug:** [Open an Issue](https://github.com/krishnapawar/timeSlotLib/issues/new)
+- 💡 **Request a Feature:** [Suggest a Feature](https://github.com/krishnapawar/timeSlotLib/issues/new)
+- 💬 **Ask a Question:** [GitHub Discussions](https://github.com/krishnapawar/timeSlotLib/discussions)
+
+When reporting an issue, please include:
+- A clear description of the problem.
+- Steps to reproduce the issue.
+- Expected and actual behavior.
+- Node.js and package versions.
+- A minimal code example, if possible.
+
+---
+
+## 🤝 Contributing
+
+Contributions are always welcome! ❤️
+
+Whether you want to fix bugs, improve documentation, add new features, or suggest enhancements, your contributions help make this library better for everyone.
+
+### How to Contribute
+
+1. Fork the [repository](https://github.com/krishnapawar/timeSlotLib).
+2. Clone your fork:
+
+   ```bash
+   git clone https://github.com/krishnapawar/timeSlotLib.git
+   ```
+
+3. Navigate to the project directory:
+
+   ```bash
+   cd timeSlotLib
+   ```
+
+4. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+5. Create a new branch:
+
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+6. Make your changes and add or update tests.
+7. Run the test suite:
+
+   ```bash
+   npm test
+   ```
+
+8. Commit your changes:
+
+   ```bash
+   git add .
+   git commit -m "feat: describe your changes"
+   ```
+
+9. Push your branch:
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+10. Open a [Pull Request](https://github.com/krishnapawar/timeSlotLib/compare).
+
+### Contribution Guidelines
+
+- Follow the existing coding style and project structure.
+- Write clean, readable, and maintainable code.
+- Add tests for new features and bug fixes.
+- Make sure all existing tests pass.
+- Update documentation when necessary.
+- Keep pull requests focused and descriptive.
+
+Thank you for contributing and supporting this project!
+
+**Maintained with ❤️ by [Krishna Pawar](https://github.com/krishnapawar)**
 
 ---
 
